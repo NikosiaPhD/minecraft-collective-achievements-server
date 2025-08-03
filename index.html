@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List Widget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .widget {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 3px;
+            width: 300px;
+            border: 1px solid #3a3a3a;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ffffff;
+            padding: 24px 8px 8px 8px;
+        }
+
+        .progress-container {
+            margin: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #404040;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80, #22c55e);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 1rem;
+            color: #a0a0a0;
+        }
+
+        .list-container {
+            max-height: 50vh;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #222222;
+            border: 1px solid #333333;
+        }
+
+        .list {
+            animation: scroll linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 3px 12px;
+            border-bottom: 1px solid #333333;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .list-item.completed {
+            background: #333333;
+            opacity: 0.8;
+        }
+
+        .list-item.completed img {
+            filter: grayscale(100%);
+        }
+
+        .icon-container {
+            /* width: 40px;
+            height: 40px; */
+            height: 100%;
+            width: auto;
+            margin-right: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            /* background: #404040; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .checkmark {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+            border: 2px solid #222222;
+            font-weight: bold;
+        }
+
+        .completed .checkmark {
+            display: flex;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .item-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .item-description {
+            font-size: 12px;
+            color: #a0a0a0;
+            line-height: 1.4;
+        }
+
+        .completed .item-title,
+        .completed .item-description {
+            color: #666666;
+        }
+
+        /* Duplicate the list for seamless scrolling */
+        .list-duplicate {
+            animation: scroll linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="title">Progress Tracker</div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0 / 0 completed</div>
+            </div>
+        </div>
+        
+        <div class="list-container">
+            <div class="list" id="taskList">
+                <!-- Items will be inserted here -->
+            </div>
+            <div class="list-duplicate" id="taskListDuplicate">
+                <!-- Duplicate items for seamless scrolling -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        
+        const initialTaskStatus = {};
+
+        function calculateAnimationDuration(itemCount) {
+            // 1 second per item, minimum 30 seconds
+            return Math.max(itemCount * 1, 30);
+        }
+
+        function createListItem(taskId, taskData) {
+            const isCompleted = taskData.done;
+
+            const item = document.createElement('div');
+            item.className = `list-item ${isCompleted ? 'completed' : ''}`;
+            
+            item.innerHTML = `
+                <div class="icon-container">
+                    <img src="${taskData.icon}" alt="${taskData.name}" class="icon">
+                    <div class="checkmark">✓</div>
+                </div>
+                <div class="content">
+                    <div class="item-title">${taskData.name}</div>
+                    ${taskData.description ? `<div class="item-description">${taskData.description}</div>` : ''}
+                </div>
+            `;
+            
+            return item;
+        }
+
+        function renderList(taskList) {
+            const taskListElement = document.getElementById('taskList');
+            const taskListDuplicate = document.getElementById('taskListDuplicate');
+            
+            // Clear existing items
+            taskListElement.innerHTML = '';
+            taskListDuplicate.innerHTML = '';
+            
+            // Create items for both lists
+            Object.keys(taskList).forEach(taskId => {
+                taskListElement.appendChild(createListItem(taskId, taskList[taskId]));
+                taskListDuplicate.appendChild(createListItem(taskId, taskList[taskId]));
+            });
+            
+            // Set dynamic animation duration
+            const itemCount = Object.keys(taskList).length;
+            const duration = calculateAnimationDuration(itemCount);
+            taskListElement.style.animationDuration = `${duration}s`;
+            taskListDuplicate.style.animationDuration = `${duration}s`;
+            
+            // Update progress
+            updateProgress(taskList);
+        }
+
+        function updateTitle(title) {
+            document.querySelector('.title').textContent = title;
+        }
+
+        function updateProgress(taskList) {
+            const completed = Object.values(taskList).filter(task => task.done).length;
+            const total = Object.keys(taskList).length;
+            const percentage = (completed / total) * 100;
+            
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent = `${completed} / ${total} completed`;
+        }
+
+        // Initialize the widget
+        if (initialTaskStatus.title) {
+            updateTitle(initialTaskStatus.title);
+        }
+        if (initialTaskStatus.tasks) {
+            renderList(initialTaskStatus.tasks);
+        }
+
+        // Connect to the Server-Sent Events stream
+        const eventSource = new EventSource("/stream");
+
+        // This function is called every time the server sends a message
+        eventSource.onmessage = function(event) {
+            console.log("Received update from server.");
+            const data = JSON.parse(event.data);
+            
+            // Handle new format with title and tasks
+            if (data.title) {
+                updateTitle(data.title);
+            }
+            if (data.tasks) {
+                renderList(data.tasks);
+            }
+        };
+
+        eventSource.onerror = function(err) {
+            console.error("EventSource failed:", err);
+            listElement.innerHTML += "<li>Connection to server lost. Please refresh.</li>";
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>
