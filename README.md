@@ -8,15 +8,30 @@ It is a lot trickier to set up and not necessary if you are happy with tracking 
 
 ## Setup
 
-either Python:
-- install dependencies
-- `python server.py`
+Clone this repo to a VM, then start the server with
 
-or Node:
-- `npm install`
-- `npm run dev` or `npm start`
+- either Python:
+    - install dependencies
+    - `python server.py`
 
+- or Node:
+    - `npm install`
+    - `npm run dev` or `npm start`
 
+to make sure this runs even if SSH connection is severed, do
+
+`nohup node server.js > out.log 2>&1 &`
+
+or
+
+```
+npm install -g pm2
+pm2 start server.js
+pm2 save
+pm2 startup
+```
+
+put the URL with :8080 into OBS and with :8080/update into the minecraft plugin (with the `/ca url` command)
 
 ## Contact, Future Plans, etc.
 
