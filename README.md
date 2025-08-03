@@ -8,13 +8,13 @@ It is a lot trickier to set up and not necessary if you are happy with tracking 
 
 ## Setup
 
-Either python:
+either Python:
 - install dependencies
 - `python server.py`
 
 or Node:
 - `npm install`
-- `npm run dev`
+- `npm run dev` or `npm start`
 
 
 
