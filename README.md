@@ -6,6 +6,17 @@ This is a simple python server that receives updates from the **Collective Minec
 It is a lot trickier to set up and not necessary if you are happy with tracking progress just in minecraft chat.
 
 
+## Setup
+
+Either python:
+- install dependencies
+- `python server.py`
+
+or Node:
+- `npm install`
+- `npm run dev`
+
+
 
 ## Contact, Future Plans, etc.
 
