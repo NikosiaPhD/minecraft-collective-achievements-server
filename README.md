@@ -1,7 +1,7 @@
 
 # Collective Minecraft Achievements Server
 
-This is a simple python server that receives updates from the **Collective Minecraft Achievements Plugin** (TODO: add link) and creates a visual list that can be shown in OBS.
+This is a simple python server that receives updates from the [**Collective Minecraft Achievements Plugin**](https://github.com/NikosiaPhD/minecraft-collective-achievements-plugin) and creates a visual list that can be shown in OBS.
 
 It is a lot trickier to set up and not necessary if you are happy with tracking progress just in minecraft chat.
 
@@ -20,10 +20,6 @@ Clone this repo to a VM, then start the server with
 
 to make sure this runs even if SSH connection is severed, do
 
-`nohup node server.js > out.log 2>&1 &`
-
-or
-
 ```
 npm install -g pm2
 pm2 start server.js
@@ -40,5 +36,6 @@ You are free to use and modify this for your own stream. Instead of sharing the 
 Feel free to contact me with suggestions or questions.
 
 Features I want to add at some point:
+- set up a lockout-bingo style competitive mode
 - use TextFit to fit longer achievement titles, requirement names, or descriptions
 - add confetti particles when something gets unlocked

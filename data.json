@@ -46,43 +46,135 @@
         "icon": "https://minecraft.wiki/images/EntitySprite_black-wolf.png",
         "description": "in Old Growth Pine Taiga biomes"
     },
-    "mob:blaze": {"icon": "https://minecraft.wiki/images/EntitySprite_blaze.png"},
-    "mob:bogged": {"icon": "https://minecraft.wiki/images/EntitySprite_bogged.png"},
-    "mob:breeze": {"icon": "https://minecraft.wiki/images/EntitySprite_breeze.png"},
-    "mob:cave spider": {"icon": "https://minecraft.wiki/images/EntitySprite_cave-spider.png"},
-    "mob:creaking": {"icon": "https://minecraft.wiki/images/EntitySprite_creaking.png"},
-    "mob:creeper": {"icon": "https://minecraft.wiki/images/EntitySprite_creeper.png"},
-    "mob:drowned": {"icon": "https://minecraft.wiki/images/EntitySprite_drowned.png"},
-    "mob:elder guardian": {"icon": "https://minecraft.wiki/images/EntitySprite_elder-guardian.png"},
-    "mob:ender dragon": {"icon": "https://minecraft.wiki/images/EntitySprite_ender-dragon.png"},
-    "mob:enderman": {"icon": "https://minecraft.wiki/images/EntitySprite_enderman.png"},
-    "mob:endermite": {"icon": "https://minecraft.wiki/images/EntitySprite_endermite.png"},
-    "mob:evoker": {"icon": "https://minecraft.wiki/images/EntitySprite_evoker.png"},
-    "mob:ghast": {"icon": "https://minecraft.wiki/images/EntitySprite_ghast.png"},
-    "mob:guardian": {"icon": "https://minecraft.wiki/images/EntitySprite_guardian.png"},
-    "mob:hoglin": {"icon": "https://minecraft.wiki/images/EntitySprite_hoglin.png"},
-    "mob:husk": {"icon": "https://minecraft.wiki/images/EntitySprite_husk.png"},
-    "mob:magma cube": {"icon": "https://minecraft.wiki/images/EntitySprite_magma-cube.png"},
-    "mob:phantom": {"icon": "https://minecraft.wiki/images/EntitySprite_phantom.png"},
-    "mob:piglin": {"icon": "https://minecraft.wiki/images/EntitySprite_piglin.png"},
-    "mob:piglin brute": {"icon": "https://minecraft.wiki/images/EntitySprite_piglin-brute.png"},
-    "mob:pillager": {"icon": "https://minecraft.wiki/images/EntitySprite_evoker.png"},
-    "mob:ravager": {"icon": "https://minecraft.wiki/images/EntitySprite_ravager.png"},
-    "mob:shulker": {"icon": "https://minecraft.wiki/images/EntitySprite_shulker.png"},
-    "mob:silverfish": {"icon": "https://minecraft.wiki/images/EntitySprite_silverfish.png"},
-    "mob:skeleton": {"icon": "https://minecraft.wiki/images/EntitySprite_skeleton.png"},
-    "mob:slime": {"icon": "https://minecraft.wiki/images/EntitySprite_slime.png"},
-    "mob:spider": {"icon": "https://minecraft.wiki/images/EntitySprite_spider.png"},
-    "mob:stray": {"icon": "https://minecraft.wiki/images/EntitySprite_stray.png"},
-    "mob:vex": {"icon": "https://minecraft.wiki/images/EntitySprite_vex.png"},
-    "mob:vindicator": {"icon": "https://minecraft.wiki/images/EntitySprite_johnny.png"},
-    "mob:witch": {"icon": "https://minecraft.wiki/images/EntitySprite_witch.png"},
-    "mob:wither": {"icon": "https://minecraft.wiki/images/EntitySprite_wither.png"},
-    "mob:wither skeleton": {"icon": "https://minecraft.wiki/images/EntitySprite_wither-skeleton.png"},
-    "mob:zoglin": {"icon": "https://minecraft.wiki/images/EntitySprite_zoglin.png"},
-    "mob:zombie": {"icon": "https://minecraft.wiki/images/EntitySprite_zombie.png"},
-    "mob:zombie villager": {"icon": "https://minecraft.wiki/images/EntitySprite_zombie-villager.png"},
-    "mob:zombified piglin": {"icon": "https://minecraft.wiki/images/EntitySprite_zombified-piglin.png"},
+    "mob:blaze": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_blaze.png",
+        "description": "in Nether biomes"
+    },
+    "mob:bogged": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_bogged.png",
+        "description": "in Swamp biomes"
+    },
+    "mob:breeze": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_breeze.png",
+        "description": "in Trial Chambers"
+    },
+    "mob:cave spider": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_cave-spider.png",
+        "description": "in mineshafts"
+    },
+    "mob:creaking": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_creaking.png",
+        "description": "in Pale Forest biomes"
+    },
+    "mob:creeper": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_creeper.png"
+    },
+    "mob:drowned": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_drowned.png"
+    },
+    "mob:elder guardian": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_elder-guardian.png",
+        "description": "in Ocean Monuments"
+    },
+    "mob:ender dragon": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_ender-dragon.png"
+    },
+    "mob:enderman": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_enderman.png"
+    },
+    "mob:endermite": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_endermite.png",
+        "description": "spawns when an ender pearl is thrown"
+    },
+    "mob:evoker": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_evoker.png",
+        "description": "in Raids or Woodland Mansions"
+    },
+    "mob:ghast": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_ghast.png"
+    },
+    "mob:guardian": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_guardian.png",
+        "description": "in Ocean Monuments"
+    },
+    "mob:hoglin": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_hoglin.png"
+    },
+    "mob:husk": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_husk.png",
+        "description": "in Desert biomes"
+    },
+    "mob:magma cube": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_magma-cube.png"
+    },
+    "mob:phantom": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_phantom.png",
+        "description": "spawns after three days no sleep"
+    },
+    "mob:piglin": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_piglin.png"
+    },
+    "mob:piglin brute": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_piglin-brute.png",
+        "description": "in Bastions"
+    },
+    "mob:pillager": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_evoker.png"
+    },
+    "mob:ravager": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_ravager.png",
+        "description": "in Raids"
+    },
+    "mob:shulker": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_shulker.png"
+    },
+    "mob:silverfish": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_silverfish.png"
+    },
+    "mob:skeleton": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_skeleton.png"
+    },
+    "mob:slime": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_slime.png"
+    },
+    "mob:spider": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_spider.png"
+    },
+    "mob:stray": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_stray.png",
+        "description": "in Snowy biomes"
+    },
+    "mob:vex": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_vex.png",
+        "description": "summoned by Evokers"
+    },
+    "mob:vindicator": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_johnny.png",
+        "description": "in Raids or Woodland Mansions"
+    },
+    "mob:witch": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_witch.png"
+    },
+    "mob:wither": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_wither.png"
+    },
+    "mob:wither skeleton": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_wither-skeleton.png"
+    },
+    "mob:zoglin": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_zoglin.png",
+        "description": "Hoglin out of the Nether"
+    },
+    "mob:zombie": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_zombie.png"
+    },
+    "mob:zombie villager": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_zombie-villager.png"
+    },
+    "mob:zombified piglin": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_zombified-piglin.png"
+    },
+
     "biome:badlands": {"icon": "https://minecraft.wiki/images/BiomeSprite_badlands.png"},
     "biome:bamboo jungle": {"icon": "https://minecraft.wiki/images/BiomeSprite_bamboo-jungle.png"},
     "biome:beach": {"icon": "https://minecraft.wiki/images/BiomeSprite_beach.png"},
@@ -141,5 +233,247 @@
     "biome:crimson forest": {"icon": "https://minecraft.wiki/images/BiomeSprite_crimson-forest.png"},
     "biome:nether wastes": {"icon": "https://minecraft.wiki/images/BiomeSprite_nether-wastes.png"},
     "biome:soul sand valley": {"icon": "https://minecraft.wiki/images/BiomeSprite_soul-sand-valley.png"},
-    "biome:warped forest": {"icon": "https://minecraft.wiki/images/BiomeSprite_warped-forest.png"}
+    "biome:warped forest": {"icon": "https://minecraft.wiki/images/BiomeSprite_warped-forest.png"},
+
+    "food:apple": {"icon": "https://minecraft.wiki/images/ItemSprite_apple.png"},
+    "food:baked potato": {"icon": "https://minecraft.wiki/images/ItemSprite_baked-potato.png"},
+    "food:beetroot": {"icon": "https://minecraft.wiki/images/ItemSprite_beetroot.png"},
+    "food:beetroot soup": {"icon": "https://minecraft.wiki/images/ItemSprite_beetroot-soup.png"},
+    "food:bread": {"icon": "https://minecraft.wiki/images/ItemSprite_bread.png"},
+    "food:carrot": {"icon": "https://minecraft.wiki/images/ItemSprite_carrot.png"},
+    "food:chorus fruit": {"icon": "https://minecraft.wiki/images/ItemSprite_chorus-fruit.png"},
+    "food:cooked chicken": {"icon": "https://minecraft.wiki/images/ItemSprite_cooked-chicken.png"},
+    "food:cooked cod": {"icon": "https://minecraft.wiki/images/ItemSprite_cooked-cod.png"},
+    "food:cooked mutton": {"icon": "https://minecraft.wiki/images/ItemSprite_cooked-mutton.png"},
+    "food:cooked porkchop": {"icon": "https://minecraft.wiki/images/ItemSprite_cooked-porkchop.png"},
+    "food:cooked rabbit": {"icon": "https://minecraft.wiki/images/ItemSprite_cooked-rabbit.png"},
+    "food:cooked salmon": {"icon": "https://minecraft.wiki/images/ItemSprite_cooked-salmon.png"},
+    "food:cookie": {"icon": "https://minecraft.wiki/images/ItemSprite_cookie.png"},
+    "food:dried kelp": {"icon": "https://minecraft.wiki/images/ItemSprite_dried-kelp.png"},
+    "food:enchanted golden apple": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_enchanted-golden-apple.png",
+        "description": "uncraftable; only found in loot chests!"
+    },
+    "food:glow berries": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_glow-berries.png",
+        "description": "found in Lush Caves"
+    },
+    "food:golden apple": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_golden-apple.png"
+    },
+    "food:golden carrot": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_golden-carrot.png"
+    },
+    "food:honey bottle": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_honey-bottle.png"
+    },
+    "food:melon slice": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_melon-slice.png"
+    },
+    "food:mushroom stew": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_mushroom-stew.png"
+    },
+    "food:poisonous potato": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_poisonous-potato.png"
+    },
+    "food:potato": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_potato.png"
+    },
+    "food:pufferfish": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_pufferfish.png"
+    },
+    "food:pumpkin pie": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_pumpkin-pie.png"
+    },
+    "food:rabbit stew": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_rabbit-stew.png"
+    },
+    "food:raw beef": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_raw-beef.png"
+    },
+    "food:raw chicken": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_raw-chicken.png"
+    },
+    "food:raw cod": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_raw-cod.png"
+    },
+    "food:raw mutton": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_raw-mutton.png"
+    },
+    "food:raw porkchop": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_raw-porkchop.png"
+    },
+    "food:raw rabbit": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_raw-rabbit.png"
+    },
+    "food:raw salmon": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_raw-salmon.png"
+    },
+    "food:rotten flesh": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_rotten-flesh.png"
+    },
+    "food:spider eye": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_spider-eye.png"
+    },
+    "food:steak": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_steak.png"
+    },
+    "food:suspicious stew": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_suspicious-stew.png"
+    },
+    "food:sweet berries": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_sweet-berries.png"
+    },
+    "food:tropical fish": {
+        "icon": "https://minecraft.wiki/images/ItemSprite_tropical-fish.png",
+        "description": "only kill drop in warm oceans; no fishing"
+    },
+
+    "breed:armadillo": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_armadillo.png",
+        "description": "in Badlands biomes"
+    },
+    "breed:axolotl": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_axolotl.png",
+        "description": "found in Lush Caves"
+    },
+    "breed:bee": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_bee.png"
+    },
+    "breed:camel": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_camel.png"
+    },
+    "breed:cat": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_cat.png"
+    },
+    "breed:chicken": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_chicken.png"
+    },
+    "breed:cow": {"icon": "https://minecraft.wiki/images/EntitySprite_cow.png"},
+    "breed:donkey": {"icon": "https://minecraft.wiki/images/EntitySprite_donkey.png"},
+    "breed:fox": {"icon": "https://minecraft.wiki/images/EntitySprite_fox.png"},
+    "breed:frog": {"icon": "https://minecraft.wiki/images/EntitySprite_frog.png"},
+    "breed:goat": {"icon": "https://minecraft.wiki/images/EntitySprite_goat.png"},
+    "breed:hoglin": {"icon": "https://minecraft.wiki/images/EntitySprite_hoglin.png"},
+    "breed:horse": {"icon": "https://minecraft.wiki/images/EntitySprite_creamy-horse.png"},
+    "breed:llama": {"icon": "https://minecraft.wiki/images/EntitySprite_creamy-llama.png"},
+    "breed:mooshroom": {"icon": "https://minecraft.wiki/images/EntitySprite_mooshroom.png"},
+    "breed:mule": {"icon": "https://minecraft.wiki/images/EntitySprite_mule.png"},
+    "breed:ocelot": {"icon": "https://minecraft.wiki/images/EntitySprite_ocelot.png"},
+    "breed:panda": {"icon": "https://minecraft.wiki/images/EntitySprite_normal-panda.png"},
+    "breed:pig": {"icon": "https://minecraft.wiki/images/EntitySprite_pig.png"},
+    "breed:rabbit": {"icon": "https://minecraft.wiki/images/EntitySprite_brown-rabbit.png"},
+    "breed:sheep": {"icon": "https://minecraft.wiki/images/EntitySprite_sheep.png"},
+    "breed:sniffer": {
+        "icon": "https://minecraft.wiki/images/EntitySprite_sniffer.png",
+        "description": "need brush to find two eggs"
+    },
+    "breed:strider": {"icon": "https://minecraft.wiki/images/EntitySprite_strider.png"},
+    "breed:turtle": {"icon": "https://minecraft.wiki/images/EntitySprite_turtle.png"},
+    "breed:wolf": {"icon": "https://minecraft.wiki/images/EntitySprite_wolf.png"},
+
+    "effect:absorption": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_absorption.png"
+    },
+    "effect:bad omen": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_bad-omen.png",
+        "description": "needs ominous bottle"
+    },
+    "effect:blindness": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_blindness.png",
+        "description": "suspicious stew (azure bluet or open eyeblossom)"
+    },
+    "effect:conduit power": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_conduit-power.png"
+    },
+    "effect:darkness": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_darkness.png",
+        "description": "trigger sensor in Deep Dark biomes"
+    },
+    "effect:dolphin's grace": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_dolphin's-grace.png"
+    },
+    "effect:fire resistance": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_fire-resistance.png"
+    },
+    "effect:glowing": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_glowing.png",
+        "description": "spectral arrow"
+    },
+    "effect:haste": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_haste.png"
+    },
+    "effect:hero of the village": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_hero-of-the-village.png",
+        "description": "after successfully defending a village from a raid"
+    },
+    "effect:hunger": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_hunger.png"
+    },
+    "effect:infested": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_infested.png"
+    },
+    "effect:invisibility": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_invisibility.png"
+    },
+    "effect:jump boost": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_jump-boost.png"
+    },
+    "effect:levitation": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_levitation.png"
+    },
+    "effect:mining fatigue": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_mining-fatigue.png"
+    },
+    "effect:nausea": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_nausea.png"
+    },
+    "effect:night vision": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_night-vision.png"
+    },
+    "effect:oozing": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_oozing.png"
+    },
+    "effect:poison": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_poison.png"
+    },
+    "effect:raid omen": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_raid-omen.png"
+    },
+    "effect:regeneration": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_regeneration.png"
+    },
+    "effect:resistance": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_resistance.png"
+    },
+    "effect:slow falling": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_slow-falling.png"
+    },
+    "effect:slowness": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_slowness.png"
+    },
+    "effect:speed": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_speed.png"
+    },
+    "effect:strength": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_strength.png"
+    },
+    "effect:trial omen": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_trial-omen.png"
+    },
+    "effect:water breathing": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_water-breathing.png"
+    },
+    "effect:weakness": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_weakness.png"
+    },
+    "effect:weaving": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_weaving.png"
+    },
+    "effect:wind charged": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_wind-charged.png"
+    },
+    "effect:wither": {
+        "icon": "https://minecraft.wiki/images/EffectSprite_wither.png"
+    }
 }
