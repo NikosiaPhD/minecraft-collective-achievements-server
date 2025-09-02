@@ -70,3 +70,4 @@ Features I might add at some point:
 - more than 2 teams
 - use TextFit to fit longer achievement titles, requirement names, or descriptions
 - add confetti particles when something gets unlocked
+- add settings for widget size, speed, etc.

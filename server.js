@@ -152,7 +152,9 @@ app.post('/update', (req, res) => {
     
     try {
         const data = req.body;
-        
+
+        console.log("Received update:", data);
+
         if (!data || typeof data !== 'object') {
             return res.status(400).json({"error": "Invalid JSON format. Expected a dictionary."});
         }

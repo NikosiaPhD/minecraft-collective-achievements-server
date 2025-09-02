@@ -22,6 +22,13 @@
             min-height: 100vh;
         }
 
+        .footer {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #a0a0a0;
+            text-align: center;
+        }
+
         .widget {
             background: #2a2a2a;
             border-radius: 12px;
@@ -194,10 +201,10 @@
             line-height: 1.4;
         }
 
-        .completed .item-title,
+        /* .completed .item-title,
         .completed .item-description {
             color: #666666;
-        }
+        } */
 
         /* Duplicate the list for seamless scrolling */
         .list-duplicate {
@@ -226,18 +233,6 @@
         .progress-fill-teamGray {
             background: #404040;
         }
-        .list-item.teamA {
-            /* Remove static color, will be set inline */
-        }
-        .list-item.teamB {
-            /* Remove static color, will be set inline */
-        }
-        .checkmark.teamA {
-            /* Remove static color, will be set inline */
-        }
-        .checkmark.teamB {
-            /* Remove static color, will be set inline */
-        }
     </style>
 </head>
 <body>
@@ -260,6 +255,9 @@
             <div class="list-duplicate" id="challengeListDuplicate">
                 <!-- Duplicate items for seamless scrolling -->
             </div>
+        </div>
+        <div class="footer">
+            developed by NikosiaPhD
         </div>
     </div>
 
@@ -305,16 +303,17 @@
             const item = document.createElement('div');
             item.className = `list-item${isCompleted ? " completed" : ""}${teamClass ? " " + teamClass : ""}`;
             // Set team background color if available
-            if (teamIdx >= 0 && teamColor) {
+            if (isCompleted && teamIdx >= 0 && teamColor) {
                 item.style.background = teamColor + "22";
             }
 
             let checkmarkClass = "checkmark";
-            if (isCompleted) checkmarkClass += " " + (teamClass || "no-team");
-
+            
             // Checkmark color
             let checkmarkStyle = "";
             if (isCompleted) {
+                checkmarkClass += " " + (teamClass || "no-team");
+                
                 if (teamIdx >= 0 && teamColor) {
                     checkmarkStyle = `background: ${teamColor};`;
                 } else if (teamClass === "teamA") {
@@ -394,7 +393,7 @@
                 // Show total tasks on second line
                 const progressTotal = document.getElementById('progressTotal');
                 progressTotal.style.display = "";
-                progressTotal.textContent = `${total} total tasks`;
+                progressTotal.textContent = `${total} total tasks (${((total+1)/2).toFixed(0)} to win)`;
             } else {
                 // Default progress bar
                 const completed = Object.values(challengeList).filter(challenge => challenge.done).length;
