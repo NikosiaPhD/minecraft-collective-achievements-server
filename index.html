@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task List Widget</title>
+    <title>Minecraft Challenge Tracker</title>
     <style>
         * {
             margin: 0;
@@ -41,6 +41,7 @@
             margin-bottom: 12px;
             color: #ffffff;
             padding: 24px 8px 8px 8px;
+            text-wrap: balance;
         }
 
         .progress-container {
@@ -66,6 +67,33 @@
         .progress-text {
             font-size: 1rem;
             color: #a0a0a0;
+        }
+
+        .progress-text.team-mode {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .progress-text-teamA {
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .progress-text-teamB {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .progress-total {
+            width: 100%;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #a0a0a0;
+            margin-top: 2px;
         }
 
         .list-container {
@@ -104,15 +132,12 @@
         }
 
         .icon-container {
-            /* width: 40px;
-            height: 40px; */
             height: 100%;
             width: auto;
             margin-right: 16px;
             border-radius: 8px;
             overflow: hidden;
             flex-shrink: 0;
-            /* background: #404040; */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -178,25 +203,61 @@
         .list-duplicate {
             animation: scroll linear infinite;
         }
+
+        .progress-bar.team-mode {
+            display: flex;
+            height: 12px;
+            width: 100%;
+            background: #404040;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .progress-fill-team {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .progress-fill-teamA {
+            background: linear-gradient(90deg, #ef8234, #ef8234);
+        }
+        .progress-fill-teamB {
+            background: linear-gradient(90deg, #22c55e, #22c55e);
+        }
+        .progress-fill-teamGray {
+            background: #404040;
+        }
+        .list-item.teamA {
+            /* Remove static color, will be set inline */
+        }
+        .list-item.teamB {
+            /* Remove static color, will be set inline */
+        }
+        .checkmark.teamA {
+            /* Remove static color, will be set inline */
+        }
+        .checkmark.teamB {
+            /* Remove static color, will be set inline */
+        }
     </style>
 </head>
 <body>
     <div class="widget">
         <div class="header">
-            <div class="title">Progress Tracker</div>
+            <div class="title">Minecraft Challenge Tracker</div>
             <div class="progress-container">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
                 <div class="progress-text" id="progressText">0 / 0 completed</div>
+                <div class="progress-total" id="progressTotal" style="display:none"></div>
             </div>
         </div>
         
         <div class="list-container">
-            <div class="list" id="taskList">
+            <div class="list" id="challengeList">
                 <!-- Items will be inserted here -->
             </div>
-            <div class="list-duplicate" id="taskListDuplicate">
+            <div class="list-duplicate" id="challengeListDuplicate">
                 <!-- Duplicate items for seamless scrolling -->
             </div>
         </div>
@@ -205,98 +266,173 @@
     <script>
         
         
-        const initialTaskStatus = {};
+        const initialChallengeStatus = {};
+
+        let teams = initialChallengeStatus.teams;
+
+        function getTeamColor(teamIdx) {
+            if (!teams || !teams[teamIdx]) return teamIdx === 0 ? "#ef8234" : "#229cc5";
+            return teams[teamIdx].color || (teamIdx === 0 ? "#ef8234" : "#229cc5");
+        }
+
+        function getTeamClass(teamName) {
+            if (!teamName) return "no-team";
+            if (!teams) return "no-team";
+            if (teamName === teams[0].name) return "teamA";
+            if (teamName === teams[1].name) return "teamB";
+            return "";
+        }
+
+        function getTeamIdx(teamName) {
+            if (!teams) return -1;
+            if (teamName === teams[0].name) return 0;
+            if (teamName === teams[1].name) return 1;
+            return -1;
+        }
 
         function calculateAnimationDuration(itemCount) {
             // 1 second per item, minimum 30 seconds
             return Math.max(itemCount * 1, 30);
         }
 
-        function createListItem(taskId, taskData) {
-            const isCompleted = taskData.done;
+        function createListItem(challengeId, challengeData) {
+            const isCompleted = challengeData.done;
+            const teamName = challengeData.team || "";
+            const teamIdx = getTeamIdx(teamName);
+            const teamClass = getTeamClass(teamName);
+            const teamColor = teamIdx >= 0 ? getTeamColor(teamIdx) : "";
 
             const item = document.createElement('div');
-            item.className = `list-item ${isCompleted ? 'completed' : ''}`;
-            
+            item.className = `list-item${isCompleted ? " completed" : ""}${teamClass ? " " + teamClass : ""}`;
+            // Set team background color if available
+            if (teamIdx >= 0 && teamColor) {
+                item.style.background = teamColor + "22";
+            }
+
+            let checkmarkClass = "checkmark";
+            if (isCompleted) checkmarkClass += " " + (teamClass || "no-team");
+
+            // Checkmark color
+            let checkmarkStyle = "";
+            if (isCompleted) {
+                if (teamIdx >= 0 && teamColor) {
+                    checkmarkStyle = `background: ${teamColor};`;
+                } else if (teamClass === "teamA") {
+                    checkmarkStyle = "background: #ef8234;";
+                } else if (teamClass === "teamB") {
+                    checkmarkStyle = "background: #229cc5;";
+                }
+            }
+
             item.innerHTML = `
                 <div class="icon-container">
-                    <img src="${taskData.icon}" alt="${taskData.name}" class="icon">
-                    <div class="checkmark">✓</div>
+                    <img src="${challengeData.icon}" alt="${challengeData.name}" class="icon">
+                    <div class="${checkmarkClass}" style="${checkmarkStyle}">${isCompleted ? "✓" : ""}</div>
                 </div>
                 <div class="content">
-                    <div class="item-title">${taskData.name}</div>
-                    ${taskData.description ? `<div class="item-description">${taskData.description}</div>` : ''}
+                    <div class="item-title">${challengeData.name}</div>
+                    ${challengeData.description ? `<div class="item-description">${challengeData.description}</div>` : ''}
                 </div>
             `;
-            
             return item;
         }
 
-        function renderList(taskList) {
-            const taskListElement = document.getElementById('taskList');
-            const taskListDuplicate = document.getElementById('taskListDuplicate');
+        function renderChallengeList(challengeList) {
+
+            console.log(challengeList);
+            const challengeListElement = document.getElementById('challengeList');
+            const challengeListDuplicate = document.getElementById('challengeListDuplicate');
             
             // Clear existing items
-            taskListElement.innerHTML = '';
-            taskListDuplicate.innerHTML = '';
+            challengeListElement.innerHTML = '';
+            challengeListDuplicate.innerHTML = '';
             
             // Create items for both lists
-            Object.keys(taskList).forEach(taskId => {
-                taskListElement.appendChild(createListItem(taskId, taskList[taskId]));
-                taskListDuplicate.appendChild(createListItem(taskId, taskList[taskId]));
+            Object.keys(challengeList).forEach(challengeId => {
+                challengeListElement.appendChild(createListItem(challengeId, challengeList[challengeId]));
+                challengeListDuplicate.appendChild(createListItem(challengeId, challengeList[challengeId]));
             });
             
             // Set dynamic animation duration
-            const itemCount = Object.keys(taskList).length;
+            const itemCount = Object.keys(challengeList).length;
             const duration = calculateAnimationDuration(itemCount);
-            taskListElement.style.animationDuration = `${duration}s`;
-            taskListDuplicate.style.animationDuration = `${duration}s`;
+            challengeListElement.style.animationDuration = `${duration}s`;
+            challengeListDuplicate.style.animationDuration = `${duration}s`;
             
             // Update progress
-            updateProgress(taskList);
+            updateChallengeProgress(challengeList);
         }
 
-        function updateTitle(title) {
+        function updateChallengeTitle(title) {
             document.querySelector('.title').textContent = title;
         }
 
-        function updateProgress(taskList) {
-            const completed = Object.values(taskList).filter(task => task.done).length;
-            const total = Object.keys(taskList).length;
-            const percentage = (completed / total) * 100;
-            
-            document.getElementById('progressFill').style.width = `${percentage}%`;
-            document.getElementById('progressText').textContent = `${completed} / ${total} completed`;
+        function updateChallengeProgress(challengeList) {
+            // If teams are present, show team progress bar
+            if (teams && teams.length === 2) {
+                let teamA_completed = 0, teamB_completed = 0, total = Object.keys(challengeList).length;
+                Object.values(challengeList).forEach(challenge => {
+                    if (challenge.done && challenge.team === teams[0].name) teamA_completed++;
+                    else if (challenge.done && challenge.team === teams[1].name) teamB_completed++;
+                });
+                // Render team progress bar
+                const bar = document.querySelector('.progress-bar');
+                bar.classList.add('team-mode');
+                const teamA_color = getTeamColor(0);
+                const teamB_color = getTeamColor(1);
+                bar.innerHTML = `
+                    <div class="progress-fill-team progress-fill-teamA" style="width:${(teamA_completed/total)*100}%;background:${teamA_color};"></div>
+                    <div class="progress-fill-team progress-fill-teamGray" style="width:${((total-teamA_completed-teamB_completed)/total)*100}%"></div>
+                    <div class="progress-fill-team progress-fill-teamB" style="width:${(teamB_completed/total)*100}%;background:${teamB_color};"></div>
+                `;
+                // Progress text with colors and alignment
+                document.getElementById('progressText').className = "progress-text team-mode";
+                document.getElementById('progressText').innerHTML = `
+                    <span class="progress-text-teamA" style="color:${teamA_color};">${teams[0].name}: ${teamA_completed}</span>
+                    <span class="progress-text-teamB" style="color:${teamB_color};">${teams[1].name}: ${teamB_completed}</span>
+                `;
+                // Show total tasks on second line
+                const progressTotal = document.getElementById('progressTotal');
+                progressTotal.style.display = "";
+                progressTotal.textContent = `${total} total tasks`;
+            } else {
+                // Default progress bar
+                const completed = Object.values(challengeList).filter(challenge => challenge.done).length;
+                const total = Object.keys(challengeList).length;
+                const percentage = (completed / total) * 100;
+                const bar = document.querySelector('.progress-bar');
+                bar.classList.remove('team-mode');
+                bar.innerHTML = `<div class="progress-fill" id="progressFill" style="width:${percentage}%"></div>`;
+                document.getElementById('progressText').className = "progress-text";
+                document.getElementById('progressText').textContent = `${completed} / ${total} completed`;
+                // Hide total tasks line
+                document.getElementById('progressTotal').style.display = "none";
+            }
         }
 
         // Initialize the widget
-        if (initialTaskStatus.title) {
-            updateTitle(initialTaskStatus.title);
+        if (initialChallengeStatus.teams) {
+            teams = initialChallengeStatus.teams;
         }
-        if (initialTaskStatus.tasks) {
-            renderList(initialTaskStatus.tasks);
+        if (initialChallengeStatus.title) {
+            updateChallengeTitle(initialChallengeStatus.title);
+        }
+        if (initialChallengeStatus.challenges) {
+            renderChallengeList(initialChallengeStatus.challenges);
         }
 
         // Connect to the Server-Sent Events stream
         const eventSource = new EventSource("/stream");
 
-        // This function is called every time the server sends a message
         eventSource.onmessage = function(event) {
-            console.log("Received update from server.");
             const data = JSON.parse(event.data);
-            
-            // Handle new format with title and tasks
-            if (data.title) {
-                updateTitle(data.title);
-            }
-            if (data.tasks) {
-                renderList(data.tasks);
-            }
+            if (data.teams) teams = data.teams;
+            if (data.title) updateChallengeTitle(data.title);
+            if (data.challenges) renderChallengeList(data.challenges);
         };
 
         eventSource.onerror = function(err) {
             console.error("EventSource failed:", err);
-            listElement.innerHTML += "<li>Connection to server lost. Please refresh.</li>";
             eventSource.close();
         };
     </script>

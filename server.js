@@ -10,74 +10,101 @@ const app = express();
 app.use(express.json());
 
 // 2. --- In-Memory Data Storage ---
-// Node.js is single-threaded by nature, so no need for locks like Python's threading.Lock()
-let TASK_METADATA = {};
+let CHALLENGE_METADATA = {};
 
-// The actual to-do list with augmented format
-let augmented_task_list = {
-    "setup": {"done": true, "name": "Setup", "icon": FALLBACK_ICON, "description": ""},
-    "design": {"done": false, "name": "Design", "icon": FALLBACK_ICON, "description": ""},
-    "frontend": {"done": false, "name": "Frontend", "icon": FALLBACK_ICON, "description": ""},
-    "backend": {"done": true, "name": "Backend", "icon": FALLBACK_ICON, "description": ""},
-    "testing": {"done": false, "name": "Testing", "icon": FALLBACK_ICON, "description": ""},
-    "deployment": {"done": false, "name": "Deployment", "icon": FALLBACK_ICON, "description": ""},
-    "documentation": {"done": false, "name": "Documentation", "icon": FALLBACK_ICON, "description": ""},
-    "review": {"done": false, "name": "Review", "icon": FALLBACK_ICON, "description": ""}
+// The actual challenge list with augmented format
+let augmented_challenge_list = {
+    "setup": {"done": true, "name": "This", "icon": FALLBACK_ICON, "description": "", "team": "Team A"},
+    "design": {"done": true, "name": "Widget", "icon": FALLBACK_ICON, "description": "", "team": "Team B"},
+    "frontend": {"done": true, "name": "Was", "icon": FALLBACK_ICON, "description": "", "team": "Team B"},
+    "backend": {"done": false, "name": "Created", "icon": FALLBACK_ICON, "description": ""},
+    "testing": {"done": false, "name": "By", "icon": FALLBACK_ICON, "description": ""},
+    "deployment": {"done": false, "name": "NikosiaPhD", "icon": FALLBACK_ICON, "description": "nikosiaphd.github.io"},
+    "documentation": {"done": false, "name": "on", "icon": FALLBACK_ICON, "description": ""},
+    "review": {"done": false, "name": "Twitch", "icon": FALLBACK_ICON, "description": "twitch.tv/NikosiaPhD"}
 };
 
-// Store the title separately
-let project_title = "Progress Tracker";
+// Store the challenge title separately
+let challenge_title = "Minecraft Challenge Tracker";
 
-// Load task metadata from data.json at startup
-async function loadTaskMetadata() {
+// Default teams and colors
+const DEFAULT_TEAM_COLORS = ["#229cc5", "#d1433b"];
+const DEFAULT_TEAMS = [
+    { name: "Team A", color: DEFAULT_TEAM_COLORS[0] },
+    { name: "Team B", color: DEFAULT_TEAM_COLORS[1] }
+];
+
+// Store teams info
+let TEAM_INFO = {
+    teams: null
+};
+
+// Load challenge metadata from data.json at startup
+async function loadChallengeMetadata() {
     try {
         const data = await fs.readFile("data.json", "utf-8");
-        TASK_METADATA = JSON.parse(data);
-        console.log("Task metadata loaded successfully");
+        CHALLENGE_METADATA = JSON.parse(data);
+        console.log("Challenge metadata loaded successfully");
     } catch (error) {
-        console.error("Error loading task metadata:", error);
-        TASK_METADATA = {};
+        console.error("Error loading challenge metadata:", error);
+        CHALLENGE_METADATA = {};
     }
 }
 
-function augmentTaskData(taskData) {
+function augmentChallengeData(challengeData, teamInfo) {
     /**
-     * Convert task format {"taskId": {"done": boolean, "description": string}} to complete format
-     * {"taskId": {"done": boolean, "name": string, "icon": string, "description": string}}
+     * Convert challenge format {"challengeId": {"done": boolean, "description": string, "team": string}} to complete format
+     * {"challengeId": {"done": boolean, "name": string, "icon": string, "description": string, "team": string, "team_color": string}}
      */
-    const augmentedTasks = {};
-    
-    for (const [taskId, taskInfo] of Object.entries(taskData)) {
-        // Extract the actual task name by removing domain qualifier
-        const displayName = taskId.includes(":") ? taskId.split(":").pop() : taskId;
+    const augmentedChallenges = {};
+    const teamColorMap = {};
+    if (teamInfo && teamInfo.teams) {
+        teamInfo.teams.forEach((team, idx) => {
+            teamColorMap[team.name] = team.color || DEFAULT_TEAM_COLORS[idx % DEFAULT_TEAM_COLORS.length];
+        });
+    }
+
+    for (const [challengeId, challengeInfo] of Object.entries(challengeData)) {
+        // Extract the actual challenge name by removing domain qualifier
+        const displayName = challengeId.includes(":") ? challengeId.split(":").pop() : challengeId;
         
-        if (taskId in TASK_METADATA) {
-            augmentedTasks[taskId] = {
-                "done": taskInfo.done,
-                "name": TASK_METADATA[taskId].name || toTitleCase(displayName),
-                "icon": TASK_METADATA[taskId].icon || FALLBACK_ICON
+        let augmented = null;
+        if (challengeId in CHALLENGE_METADATA) {
+            augmented = {
+                "done": challengeInfo.done,
+                "name": CHALLENGE_METADATA[challengeId].name || toTitleCase(displayName),
+                "icon": CHALLENGE_METADATA[challengeId].icon || FALLBACK_ICON
             };
             
             // Prioritize provided description, then metadata description, then empty
-            if (taskInfo.description && taskInfo.description.trim()) {
-                augmentedTasks[taskId].description = taskInfo.description;
-            } else if (TASK_METADATA[taskId].description) {
-                augmentedTasks[taskId].description = TASK_METADATA[taskId].description;
+            if (challengeInfo.description && challengeInfo.description.trim()) {
+                augmented.description = challengeInfo.description;
+            } else if (CHALLENGE_METADATA[challengeId].description) {
+                augmented.description = CHALLENGE_METADATA[challengeId].description;
             } else {
-                augmentedTasks[taskId].description = "";
+                augmented.description = "";
             }
         } else {
-            // Fallback for unknown tasks
-            augmentedTasks[taskId] = {
-                "done": taskInfo.done,
+            // Fallback for unknown challenges
+            augmented = {
+                "done": challengeInfo.done,
                 "name": toTitleCase(displayName),
                 "icon": FALLBACK_ICON,
-                "description": taskInfo.description || ""
+                "description": challengeInfo.description || ""
             };
         }
+        // Team info
+        if (challengeInfo.team && teamColorMap[challengeInfo.team]) {
+            augmented.team = challengeInfo.team;
+            augmented.team_color = teamColorMap[challengeInfo.team];
+        } else {
+            augmented.team = "";
+            augmented.team_color = "";
+        }
+        augmentedChallenges[challengeId] = augmented;
     }
     
-    return augmentedTasks;
+    return augmentedChallenges;
 }
 
 // Helper function to convert string to title case
@@ -86,7 +113,7 @@ function toTitleCase(str) {
 }
 
 // EventEmitter for SSE instead of Queue system
-const taskUpdates = new EventEmitter();
+const challengeUpdates = new EventEmitter();
 
 // 3. --- The Main HTML Page ---
 // This serves the user-facing page with the necessary JavaScript.
@@ -95,16 +122,17 @@ app.get('/', async (req, res) => {
         // The initial_data is passed to the template to render the list on first load,
         // so the user doesn't see a blank page before the first SSE event arrives.
         const initialData = JSON.stringify({
-            "title": project_title,
-            "tasks": augmented_task_list
+            "title": challenge_title,
+            "challenges": augmented_challenge_list,
+            "teams": TEAM_INFO.teams
         });
 
         const htmlTemplate = await fs.readFile("index.html", "utf-8");
 
-        // Replace the placeholder JavaScript variable with the current task list
+        // Replace the placeholder JavaScript variable with the current challenge list
         const html = htmlTemplate.replace(
-            "const initialTaskStatus = {};",
-            `const initialTaskStatus = ${initialData};`
+            "const initialChallengeStatus = {};",
+            `const initialChallengeStatus = ${initialData};`
         );
         
         res.send(html);
@@ -119,7 +147,7 @@ app.post('/update', (req, res) => {
     /**
      * This should be in the format 
      * { "title" : title,
-     * "tasks" : { "task1": {"done": true, "description": "Task 1 description"}, "task2": {"done": false, "description": null}, ... } }
+     * "challenges" : { "challenge1": {"done": true, "description": "Challenge 1 description"}, "challenge2": {"done": false, "description": null}, ... } }
      */
     
     try {
@@ -130,28 +158,40 @@ app.post('/update', (req, res) => {
         }
         
         // Validate the structure
-        if (!("title" in data) || !("tasks" in data)) {
-            return res.status(400).json({"error": "Missing 'title' or 'tasks' in request data."});
+        if (!("title" in data) || !("challenges" in data)) {
+            return res.status(400).json({"error": "Missing 'title' or 'challenges' in request data."});
         }
         
+        // Handle teams
+        if ("teams" in data && Array.isArray(data.teams) && data.teams.length === 2) {
+            // Each team: { name, color }
+            TEAM_INFO.teams = data.teams.map((team, idx) => ({
+                name: team.name || DEFAULT_TEAMS[idx].name,
+                color: team.color || DEFAULT_TEAM_COLORS[idx % DEFAULT_TEAM_COLORS.length]
+            }));
+        } else {
+            TEAM_INFO.teams = null;
+        }
+
         // Update the title
-        project_title = data.title;
+        challenge_title = data.title;
         
-        // Store the augmented task data directly
-        augmented_task_list = augmentTaskData(data.tasks);
+        // Store the augmented challenge data directly
+        augmented_challenge_list = augmentChallengeData(data.challenges, TEAM_INFO);
         
         // Notify all listeners of the change
         const message = JSON.stringify({
-            "title": project_title,
-            "tasks": augmented_task_list
+            "title": challenge_title,
+            "challenges": augmented_challenge_list,
+            "teams": TEAM_INFO.teams
         });
         
-        taskUpdates.emit('update', message);
+        challengeUpdates.emit('update', message);
         
-        return res.json({"status": "ok", "message": "Task list updated."});
+        return res.json({"status": "ok", "message": "Challenge list updated."});
         
     } catch (error) {
-        console.error("Error updating task list:", error);
+        console.error("Error updating challenge list:", error);
         return res.status(400).json({"error": "Malformed JSON."});
     }
 });
@@ -176,17 +216,17 @@ app.get('/stream', (req, res) => {
         res.write(`data: ${message}\n\n`);
     };
     
-    taskUpdates.on('update', updateHandler);
+    challengeUpdates.on('update', updateHandler);
     
     // Cleanup on client disconnect
     req.on('close', () => {
-        taskUpdates.removeListener('update', updateHandler);
+        challengeUpdates.removeListener('update', updateHandler);
         console.log('Client disconnected from SSE stream');
     });
     
     req.on('error', (error) => {
         console.error('SSE stream error:', error);
-        taskUpdates.removeListener('update', updateHandler);
+        challengeUpdates.removeListener('update', updateHandler);
     });
 });
 
@@ -194,8 +234,8 @@ app.get('/stream', (req, res) => {
 const PORT = process.env.PORT || 8080;
 
 async function startServer() {
-    // Load task metadata before starting the server
-    await loadTaskMetadata();
+    // Load challenge metadata before starting the server
+    await loadChallengeMetadata();
     
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);

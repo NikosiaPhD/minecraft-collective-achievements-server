@@ -288,25 +288,32 @@
     "food:rabbit stew": {
         "icon": "https://minecraft.wiki/images/ItemSprite_rabbit-stew.png"
     },
-    "food:raw beef": {
+    "food:beef": {
+        "name": "Raw Beef",
         "icon": "https://minecraft.wiki/images/ItemSprite_raw-beef.png"
     },
-    "food:raw chicken": {
+    "food:chicken": {
+        "name": "Raw Chicken",
         "icon": "https://minecraft.wiki/images/ItemSprite_raw-chicken.png"
     },
-    "food:raw cod": {
+    "food:cod": {
+        "name": "Raw Cod",
         "icon": "https://minecraft.wiki/images/ItemSprite_raw-cod.png"
     },
-    "food:raw mutton": {
+    "food:mutton": {
+        "name": "Raw Mutton",
         "icon": "https://minecraft.wiki/images/ItemSprite_raw-mutton.png"
     },
-    "food:raw porkchop": {
+    "food:porkchop": {
+        "name": "Raw Porkchop",
         "icon": "https://minecraft.wiki/images/ItemSprite_raw-porkchop.png"
     },
-    "food:raw rabbit": {
+    "food:rabbit": {
+        "name": "Raw Rabbit",
         "icon": "https://minecraft.wiki/images/ItemSprite_raw-rabbit.png"
     },
-    "food:raw salmon": {
+    "food:salmon": {
+        "name": "Raw Salmon",
         "icon": "https://minecraft.wiki/images/ItemSprite_raw-salmon.png"
     },
     "food:rotten flesh": {
@@ -315,7 +322,8 @@
     "food:spider eye": {
         "icon": "https://minecraft.wiki/images/ItemSprite_spider-eye.png"
     },
-    "food:steak": {
+    "food:cooked beef": {
+        "name": "Steak",
         "icon": "https://minecraft.wiki/images/ItemSprite_steak.png"
     },
     "food:suspicious stew": {
